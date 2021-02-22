@@ -8,12 +8,12 @@ class Footer extends React.Component{
         return(
             <div>
                 <footer className="m-auto">
-                    <h4>Follow Us on</h4>
+                    <h4 style={{alignContent:"center"}}>Follow Us on</h4>
                     <Row className="m-auto">
-                        <Col sm = {{ span: 1 }} offset = {{span: 1}}><SiFacebook/></Col>
-                        <Col sm = {{ span: 1 }} offset = {{span: 1}}><SiInstagram/></Col>
-                        <Col sm = {{ span: 1 }} offset = {{span: 1}}><SiTwitter/></Col>
-                        <Col sm = {{ span: 1 }} offset = {{span: 1}}><SiYoutube/></Col>
+                        <Col offset = {{span: 1}}><SiFacebook/></Col>
+                        <Col offset = {{span: 1}}><SiInstagram/></Col>
+                        <Col offset = {{span: 1}}><SiTwitter/></Col>
+                        <Col offset = {{span: 1}}><SiYoutube/></Col>
                     </Row>
                 </footer>
             </div>
