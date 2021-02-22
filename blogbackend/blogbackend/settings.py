@@ -27,7 +27,7 @@ SECRET_KEY = 'i%rv_9p^t_)l=bw8=nebxl-8h6jr-31-+m2z#oc-iq%y94*q7o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -96,11 +96,11 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=200),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=5),
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
     'JWT_ALLOW_REFRESH': False,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=10),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
     'JWT_AUTH_COOKIE': None,
 }
@@ -113,8 +113,12 @@ WSGI_APPLICATION = 'blogbackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blogs',
+        'USER': 'postgres',
+        'PASSWORD': 'qwertyuiop',
+        'HOST': 'database-1.c5oihaelbfej.us-east-1.rds.amazonaws.com',
+        'PORT': 5432,
     }
 }
 
