@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const secureAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000'
+    baseURL: 'http://ec2-13-235-246-220.ap-south-1.compute.amazonaws.com:8000'
 })
 
 secureAxios.interceptors.response.use(response => {

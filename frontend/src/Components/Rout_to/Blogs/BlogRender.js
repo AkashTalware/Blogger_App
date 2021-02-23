@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Card, Col, Container, Row, ButtonGroup  } from 'react-bootstrap'
+import { Button, Card, Col, Row, ButtonGroup  } from 'react-bootstrap'
 import ShowMoreText from 'react-show-more-text'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FaEdit } from "react-icons/fa";
 import {FcNext} from 'react-icons/fc'
-import { RiHeart3Fill, RiHeart3Line } from 'react-icons/ri'
+import { RiHeart3Fill } from 'react-icons/ri'
 import { connect } from 'react-redux'
 import secureAxios from '../../../secureAxios'
 

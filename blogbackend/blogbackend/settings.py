@@ -27,7 +27,7 @@ SECRET_KEY = 'i%rv_9p^t_)l=bw8=nebxl-8h6jr-31-+m2z#oc-iq%y94*q7o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -113,8 +113,12 @@ WSGI_APPLICATION = 'blogbackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blogdb',
+        'USER': 'postgres',
+        'PASSWORD': 'QAZ&1234',
+        'HOST': 'database-1.cuptvrug3qer.ap-south-1.rds.amazonaws.com',
+        'PORT': 5432,
     }
 }
 
@@ -170,5 +174,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# we whitelist localhost:3000 because that's where frontend will be served
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000',]
+# we whitelist http://ec2-13-235-246-220.ap-south-1.compute.amazonaws.com:3000 because that's where frontend will be served
+CORS_ORIGIN_WHITELIST = ['http://ec2-13-235-246-220.ap-south-1.compute.amazonaws.com:3000',]
