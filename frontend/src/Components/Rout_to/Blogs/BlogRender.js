@@ -10,15 +10,17 @@ import secureAxios from '../../../secureAxios'
 
 class BlogRender extends React.Component{
 
-    constructor(props){
-        super(props)
-    }
+    // constructor(props){
+    //     super(props)
+    // }
 
     handleDelete=(id, index)=>{
+        console.log(index, "Indexxxxx")
         secureAxios.delete(`/blog/${id}`)
             .then(res => {
                 console.log(res.data)
                 this.props.deleteBlog(index)
+                this.props.history.push("/viewblogs")
             })
             .catch(err => {
                 console.log(err)
@@ -53,47 +55,59 @@ class BlogRender extends React.Component{
         })
     }
 
+    styleImage={
+        height: "160px",
+        width: "100%",
+        display: "block",
+    }
+
+    styleFooter={
+        position: "absolute",
+        bottom: "0",
+        width:"100%",
+        textAlign: "center"
+      }
+
     render(){
-        console.log(this.props.userDetails, "props in BlogRender")
+        // console.log(this.props.index, "props in BlogRender")
         return(
             <div>
-                <Card className="bg-warning" style={{ backGroundColor:"palegoldenrod" }}>
-                    <Card.Img src={`http://127.0.0.1:8000${this.props.item.image}`} alt="Card image" />
-                        <Card.Title className="m-2" style={{ margin: "auto", alignContent:"center"}}>{this.props.item.title}</Card.Title>
-                        <hr/>
-                        <Card.Text className="m-2">
-                            <ShowMoreText 
-                                lines={3} more='...' less='Show less' expanded={false}> 
-                                {this.props.item.body}
-                            </ShowMoreText>
-                        </Card.Text>
-                        <hr/>
-                        <Card.Footer className="m-2">
-                            <Row className='mt-3'>
-                                <ButtonGroup className="m-auto" lg = {{ span: 4 }} sm = {{ span: 2 }}>
-                                    <Button className="m-auto" onClick={()=>{this.likeBlog(this.props.item.id, this.props.index)}}><RiHeart3Fill/> <strong>{this.props.item.blog_likes}</strong></Button>
-                                    
-                                    {this.props.userDetails.is_superuser ||
-                                    this.props.userDetails.id === this.props.item.author?
-                                        <>
-                                            <Button className='m-2' variant='outline-success' onClick={()=>{this.props.handleEdit(this.props.item)}}> <FaEdit className="m-auto"/></Button>
-                                            <Button className='m-2' variant='outline-danger' onClick = {()=>this.props.handleDelete(this.props.item.id, this.props.index)}><RiDeleteBinLine className="m-auto" /></Button>
-                                        </>
-                                        :
-                                        <></>
-                                    }
-                                    <Button className='m-2' variant='outline-success' onClick = {()=>{this.props.viewDetails(this.props.item)}}> <FcNext/></Button>
-                                </ButtonGroup>
-                            </Row>
-                            <footer>
-                                <Row>
-                                    <Col sm='5'><small>Posted On:</small></Col>
-                                    <Col sm='7'><small>{new Date(this.props.item.date_published).toDateString()}</small></Col>
-                                </Row>
-                            </footer>
-                        </Card.Footer>
+                <Card className="bg-warning" style={{ backGroundColor:"palegoldenrod", width:"100%", height:"500px" }}>
+                    <Card.Img src={`http://127.0.0.1:8000${this.props.item.image}`} alt="Card image" style={this.styleImage}/>
+                    <Card.Title className="m-2" style={{ margin: "auto", alignContent:"center"}}>
+                        {this.props.item.title}
+                    </Card.Title>
+                    <hr/>
+                    <Card.Text className="m-2">
+                        <ShowMoreText 
+                            lines={3} more='' less='Show less' expanded={false}> 
+                            {this.props.item.body}
+                        </ShowMoreText>
+                    </Card.Text>
+                    <hr/>
+                    <Card.Footer className="mb-2" style={this.styleFooter}>
+                        <Row className='mt-3'>
+                            <ButtonGroup className="m-auto" style={{position:"relative"}} lg = {{ span: 4 }} md={{size:"sm"}}>
+                                <Button onClick={()=>{this.likeBlog(this.props.item.id, this.props.index)}}><RiHeart3Fill/> <strong>{this.props.item.blog_likes}</strong></Button>
+                                
+                                {this.props.userDetails.is_superuser ||
+                                this.props.userDetails.id === this.props.item.author?
+                                    <>
+                                        <Button variant='outline-success' onClick={()=>{this.props.handleEdit(this.props.item)}}> <FaEdit className="m-auto"/></Button>
+                                        <Button variant='outline-danger' onClick = {()=>{this.props.handleDelete(this.props.item.id, this.props.index)}}><RiDeleteBinLine className="m-auto" /></Button>
+                                    </>
+                                    :
+                                    <></>
+                                }
+                                <Button variant='outline-success' onClick = {()=>{this.props.viewDetails(this.props.item)}}> <FcNext className="m-auto"/></Button>
+                            </ButtonGroup>
+                        </Row>
+                        <Row>
+                            <Col sm='5'><small>Posted On:</small></Col>
+                            <Col sm='7'><small>{new Date(this.props.item.date_published).toDateString()}</small></Col>
+                        </Row>
+                    </Card.Footer>
                 </Card>
-                <hr/>
             </div>
         )
     }

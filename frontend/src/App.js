@@ -13,37 +13,34 @@ import ViewBlogs from './Components/Rout_to/Blogs/ViewBlogs';
 import DetailBlog from './Components/Rout_to/Blogs/DetailBlog';
 import RefreshToken from './Components/Rout_to/RefreshToken';
 import MyBlogs from './Components/Rout_to/Blogs/myBlogs'
-import ImageTest from './Components/Rout_to/ImageTest'
 import BlogRender from './Components/Rout_to/Blogs/BlogRender'
+import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary'
 // import {withRouter} from 'react-router-dom'
 
 
 class App extends Component {
 
-	// constructor(props){
-	// 	super(props)
-	// }
-
 	render() {
 		return (
 			<div>
-				<BrowserRouter>
-					<Header/>
-					<Switch>
-						<Route exact path = "/" component = {Home}/>
-						<Route path = "/login" component = {Login}/>
-						<Route path="/logout" component = {Logout}/>
-						<Route path="/signup" component = {SignUp}/>
-						<Route path="/createblog" component = {CreateBlog}/>
-						<Route path="/viewblogs" component = {ViewBlogs}/>
-						<Route path="/detailblog" component = {DetailBlog}/>
-						<Route path="/refreshtoken" component = {RefreshToken}/>
-						<Route path="/myblogs" component = {MyBlogs}/>
-						<Route path="/imagetest" component = {ImageTest} />
-						<BlogRender/>
-					</Switch>
-					<Footer/>
-				</BrowserRouter>
+				<ErrorBoundary>
+					<BrowserRouter>
+						<Header/>
+							<Switch>
+								<Route exact path = "/" component = {Home}/>
+								<Route path = "/login" component = {Login}/>
+								<Route path="/logout" component = {Logout}/>
+								<Route path="/signup" component = {SignUp}/>
+								<Route path="/createblog" component = {CreateBlog}/>
+								<Route path="/viewblogs" component = {ViewBlogs}/>
+								<Route path="/detailblog" component = {DetailBlog}/>
+								<Route path="/refreshtoken" component = {RefreshToken}/>
+								<Route path="/myblogs" component = {MyBlogs}/>
+								<BlogRender/>
+							</Switch>
+						<Footer/>
+					</BrowserRouter>
+				</ErrorBoundary>
 			</div>
     	)
 	}

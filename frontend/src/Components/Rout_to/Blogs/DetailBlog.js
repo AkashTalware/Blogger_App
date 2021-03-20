@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import secureAxios from '../../../secureAxios'
 import { Form, Button, Container, InputGroup, Row, Col, Card } from 'react-bootstrap'
 import { RiDeleteBinLine } from 'react-icons/ri'
+import { FaEdit } from "react-icons/fa";
 
 class DetailBlog extends Component{
     constructor(props){
@@ -28,7 +29,7 @@ class DetailBlog extends Component{
             image:this.props.detailBlog.image,
             date_published:this.props.detailBlog.date_published,
             author:this.props.detailBlog.author,
-            authorDetails:{first_name:"Author Could not be found"}
+            authorDetails:{first_name:"Full Name of author Could not be found"}
         })
 
         if (!localStorage.getItem('username')){
@@ -58,7 +59,7 @@ class DetailBlog extends Component{
     }
 
     editThisBlog=(evt)=>{
-        console.log(this.state.image.name)
+        // console.log(this.state.image.name)
 
         const postData = JSON.stringify({
             ...this.props.detailBlog,
@@ -70,8 +71,7 @@ class DetailBlog extends Component{
         postForm.append("title", this.state.title)
         postForm.append("body", this.state.body)
         this.state.imageChanged && postForm.append("image", this.state.image, this.state.image.name)
-        // postForm.append("author", this.props.userDetails.id)
-        console.log(postForm)
+        // console.log(postForm)
 
         secureAxios.put(`/blog/${this.props.detailBlog.id}/`, postForm, {headers: {
             'content-type': 'multipart/form-data',
@@ -80,35 +80,36 @@ class DetailBlog extends Component{
         }).then(res=>{
             console.log(res.data)
             // this.props.history.push('/createblog')
-            this.setState({ title:"", body:"", image:null, imageChanged:false })
+            this.setState({ imageChanged:false })
+            console.log(this.state, "Updation Successful!!")
             this.ref.current.value = null
             this.props.doneEditing(postData)
+            // this.props.history.push('/viewblogs')
         }).catch(err=>{
             console.log(err)
         })
         
-        // secureAxios.put(`/blog/${this.props.detailBlog.id}/`, postData, {headers: {
-        //     'Content-Type': 'application/json',
-        //     'Authorization': `Bearer ${localStorage.getItem("access")}`,
-        // }
-        //     }).then(res=>{
-        //         console.log(res.data)
-        //         this.props.doneEditing(postData)
-        //         this.props.history.push('/detailblog')
-        //     }).catch(err=>{
-        //         console.log(err)
-        // })
     }
-
-    handleDelete=(id, index)=>{
+    
+    handleDelete=(id)=>{
         secureAxios.delete(`/blog/${id}`)
             .then(res => {
                 console.log(res.data)
+                let delIndex = -1
+                this.props.blogs.find((item, index)=>{
+                    if(item.id === id){
+                        delIndex = index
+                        return item
+                    }
+                    return true
+                })
+                console.log(delIndex, "delete index")
+                this.props.deleteBlog(delIndex)
+                this.props.history.push("/myblogs")
             })
             .catch(err => {
                 console.log(err)
             })
-        this.props.deleteBlog(index)
     }
 
     handleEdit=()=>{
@@ -125,14 +126,12 @@ class DetailBlog extends Component{
     styleImage = {
         position:"relative",
         width: "90%",
-        // maxWidth: "400px",
-        // height: "auto",
     }
 
     render(){
         const {title, body,image, date_published, author, id} = this.state
         // console.log(this.props.editBlog, "this.props")
-        console.log(this.state, "this.state")
+        // console.log(this.state, "this.state")
         return(
             <div>
                 {this.props.detailBlog.edit? 
@@ -185,7 +184,7 @@ class DetailBlog extends Component{
                                 <Col sm='9'>
                                     <small>{this.state.authorDetails.first_name} {this.state.authorDetails.last_name} on {new Date(date_published).toDateString()}</small>
                                 </Col>
-                                :<small>Author Could not be found!!</small>}
+                                :<small>Full name of author Could not be found!!</small>}
                             </Row>
                             <Card.Body>
                                 <Card.Text className="m-auto">
@@ -193,17 +192,15 @@ class DetailBlog extends Component{
                                     <Row>
                                         <Col style={this.styleBody}>{body}</Col>
                                     </Row>
-                                    {this.props.userDetails.id === author? 
-                                    <Row className='mt-3'>
-                                        <Button className='mx-2' variant='outline-danger' onClick = {()=>this.handleDelete(id)}><RiDeleteBinLine className="mr-2 my-auto" /> Remove</Button>
-                                        <Button className='mx-2' variant='outline-info' onClick = {()=>this.handleEdit()}><RiDeleteBinLine className="mr-2 my-auto" /> Edit</Button>
-                                    </Row>
-                                    :
-                                    <></>
+                                    {this.props.userDetails.is_superuser || this.props.userDetails.id === author ? 
+                                        <Row className='mt-3'>
+                                            <Button className='mx-2' variant='outline-danger' onClick = {()=>this.handleDelete(id)}><RiDeleteBinLine className="mr-2 my-auto" /> Remove</Button>
+                                            <Button className='mx-2' variant='outline-info' onClick = {()=>this.handleEdit()}><FaEdit className="mr-2 my-auto" /> Edit</Button>
+                                        </Row>
+                                        :
+                                        <></>
                                     }
-
                                 </Card.Text>
-                                
                             </Card.Body>
                         </Card>
                     </Container>
@@ -219,6 +216,7 @@ const mapStateToProps=(state,props)=>{
         userDetails: state.userDetails.username != null ? state.userDetails : false,
         detailBlog : state.detailBlog.id != null ? state.detailBlog : false,
         bearerToken: state.token,
+        blogs: state.blogs
     }
 }
 

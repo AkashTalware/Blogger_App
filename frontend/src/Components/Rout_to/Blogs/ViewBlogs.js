@@ -54,16 +54,15 @@ class ViewBlogs extends Component {
 
         return (
             <div>
-                
                 <CardColumns style={{ width: "90%", margin: "auto"}}>
-                {this.props.blogs.map((item, index) => {
-                    return (
-                        <div>
-                            <BlogRender key={index} index={index} item={item} userDetails={this.props.userDetails} viewDetails={this.viewDetails} 
-                            handleEdit={this.handleEdit} handleDelete={this.handleDelete} />
-                        </div>
-                )})
-                }
+                    {this.props.blogs.map((item, index) => {
+                        return (
+                            <div>
+                                <BlogRender key={index} index={index} item={item} userDetails={this.props.userDetails} viewDetails={this.viewDetails} 
+                                handleEdit={this.handleEdit} handleDelete={this.handleDelete} />
+                            </div>
+                    )})
+                    }
                 </CardColumns>
             </div>
         )

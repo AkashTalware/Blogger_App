@@ -14,7 +14,6 @@ class MyBlogs extends Component {
         }
     }
 
-
     componentDidMount() {
         //Push to login if user is not Logged in
         console.log(this.props.userDetails)
@@ -69,7 +68,6 @@ class MyBlogs extends Component {
 
         return (
             <div>
-                <hr/>
                 <CardColumns style={{ width: "90%", margin: "auto"}} className="my-auto">
                 {this.props.blogs.map((item, index) => {
                     return (

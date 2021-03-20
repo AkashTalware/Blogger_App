@@ -8,6 +8,11 @@ bin-release/
 .settings/
 node_modules/
 
+# From Backend
+!media/blog_background.jpg
+!media/IM3.jpg
+media/*
+
 # Executables
 *.swf
 *.air

@@ -40,7 +40,10 @@ class Header extends Component{
         this.setState({navItems:navitem})
     }
 
-    
+    styleRight={
+        position:"absolute",
+        right:"0"
+    }
 
     render(){
         // console.log("Header file", this.props.userDetails)
@@ -53,8 +56,7 @@ class Header extends Component{
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">  
                                 <Nav className="ml-5 mr-auto">
-                                    <NavItem><Link to ="/" className="mx-2 my-auto" style={{color:"#19e6e6", fontSize:"17px"}}><AiOutlineHome className="ml-2 my-auto"/> Home</Link></NavItem>
-                                    {/* <NavItem><Link to ="/imagetest" className="mx-2 my-auto"><AiTwotoneHome className="ml-2 my-auto"/> Image Test</Link></NavItem> */}
+                                    <NavItem  className="mx-2 my-auto"><Link to ="/" style={{color:"#19e6e6", fontSize:"17px"}}><AiOutlineHome/> Home</Link></NavItem>
                                     
                                     {this.props.userDetails.username == null ?
                                         <>
@@ -70,20 +72,18 @@ class Header extends Component{
                                     }
                                 </Nav>
 
-                                <Nav className="mr-4">
-                                    {this.props.userDetails.username == null ? 
-                                        <></>
-                                        :
+                                <Nav className="ml-5 mr-auto">
+                                    {this.props.userDetails.username != null &&
                                         <>
                                             <Row style={{color:"#2bff51", fontSize:"17px"}}>
-                                                <FaUserAlt className="ml-2 my-auto"/>
+                                                <FaUserAlt className="ml-4 my-auto"/>
                                                 <NavDropdown className="mx-2 my-auto" style={{color:"green", fontSize:"17px"}} title= {`Hello ${this.props.userDetails.first_name}`}>
                                                     <NavDropdown.Item><CgUser/> <strong>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</strong>  </NavDropdown.Item>
                                                     <NavDropdown.Item><CgProfile/><strong>{this.props.userDetails.username}</strong></NavDropdown.Item>
                                                     <NavDropdown.Item><GoMail/>  <strong>{this.props.userDetails.email}</strong></NavDropdown.Item>
                                                 </NavDropdown>
                                             </Row>
-                                            <NavItem className="mx-2 my-auto"><Link to='/logout' style={{color:"red", fontSize:"17px"}}><AiOutlineLogout className="m-4 my-auto"/></Link></NavItem>
+                                            <NavItem className="mx-2 my-auto"><Link to='/logout' style={{color:"red", fontSize:"17px"}}><AiOutlineLogout/></Link></NavItem>
                                         </>
                                     }
                                 </Nav>
